@@ -119,8 +119,6 @@ set(NET_SOURCES
     net/PasteUpload.cpp
     net/PasteUpload.h
     net/Sink.h
-    net/URLConstants.cpp
-    net/URLConstants.h
     net/Validator.h
 )
 
@@ -259,8 +257,8 @@ set(MINECRAFT_SOURCES
     minecraft/LaunchProfile.h
     minecraft/Component.cpp
     minecraft/Component.h
-    minecraft/ComponentList.cpp
-    minecraft/ComponentList.h
+    minecraft/PackProfile.cpp
+    minecraft/PackProfile.h
     minecraft/ComponentUpdateTask.cpp
     minecraft/ComponentUpdateTask.h
     minecraft/MinecraftLoadAndCheck.h
@@ -453,6 +451,13 @@ set(FLAME_SOURCES
     modplatform/flame/FileResolvingTask.cpp
 )
 
+set(MODPACKSCH_SOURCES
+    modplatform/modpacksch/FTBPackInstallTask.h
+    modplatform/modpacksch/FTBPackInstallTask.cpp
+    modplatform/modpacksch/FTBPackManifest.h
+    modplatform/modpacksch/FTBPackManifest.cpp
+)
+
 add_unit_test(Index
     SOURCES meta/Index_test.cpp
     LIBS MultiMC_logic
@@ -483,6 +488,7 @@ set(LOGIC_SOURCES
     ${ICONS_SOURCES}
     ${FTB_SOURCES}
     ${FLAME_SOURCES}
+    ${MODPACKSCH_SOURCES}
 )
 
 add_library(MultiMC_logic SHARED ${LOGIC_SOURCES})
@@ -491,7 +497,7 @@ set_target_properties(MultiMC_logic PROPERTIES CXX_VISIBILITY_PRESET hidden VISI
 generate_export_header(MultiMC_logic)
 
 # Link
-target_link_libraries(MultiMC_logic systeminfo MultiMC_quazip MultiMC_classparser ${NBT_NAME} ${ZLIB_LIBRARIES})
+target_link_libraries(MultiMC_logic systeminfo MultiMC_quazip MultiMC_classparser ${NBT_NAME} ${ZLIB_LIBRARIES} BuildConfig)
 target_link_libraries(MultiMC_logic Qt5::Core Qt5::Xml Qt5::Network Qt5::Concurrent)
 
 # Mark and export headers
